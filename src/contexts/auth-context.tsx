@@ -1,5 +1,5 @@
-import { useAuth } from "@clerk/clerk-react";
-import { ReactNode, createContext, useContext } from "react";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { ReactNode, createContext, useContext, useEffect } from "react";
 
 type AuthContextValue = {
     isLoaded: boolean;
@@ -17,7 +17,10 @@ const Auth = createContext<AuthContextValue>({} as AuthContextValue)
 
 export default function AuthContext({ children }: AuthContextProps){
     const {isLoaded, userId, signOut, getToken, isSignedIn} = useAuth()
-
+    //const {user} = useUser()
+    useEffect(function(){
+        console.log('changing')
+    },[isLoaded, userId ])
     return <Auth.Provider value={{
         isLoaded, userId, signOut,getToken, isSignedIn
     }}>

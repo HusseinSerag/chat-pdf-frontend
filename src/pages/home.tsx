@@ -8,21 +8,20 @@ export default function Home() {
    const {userId, } =  useCustomAuth()
    const isAuthenticated = !!userId;
     
-    return <div className="w-screen min-h-screen flex justify-center items-center bg-gradient-to-b from-pink-300 via-purple-300 to-indigo-400 ">
-        <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-
+    return <div className="w-screen min-h-screen flex justify-center items-center bg-gradient-to-r from-rose-100 to-teal-100">
+        <div className="absolute w-full max-w-[450px] top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
         <main className="flex flex-col items-center gap-2 text-center">
-            <div className="flex w-fit items-center gap-2">
+            <div className="flex  items-center justify-center gap-3">
                 <h1 className="text-3xl md:text-4xl font-semibold">Chat with any PDF</h1>
-                <UserButton  />
+                    <UserButton  />
             </div>
-            <div className="flex">
+            <div className="flex mt-2">
                 {isAuthenticated && <Button size={'sm'}>Go to Chats </Button>}
             </div>
             <p className="max-w-[80%] text-sm sm:text-base text-balance text-slate-800">
                 Join millions of students, researchers, and proffessionals to instantly answer questions and understand research with AI
             </p>
-            <div className="w-full mt-2">
+            <div className="w-full px-4 mt-2">
                 {isAuthenticated ? <label className="bg-white h-36 p-2 flex items-center rounded-md justify-center" htmlFor="file"> 
                     <div className="flex gap-2 flex-col items-center rounded-md border-[3px] border-dashed border-gray-400 justify-center h-full w-full bg-gray-300 ">
                         <Inbox className="text-purple-900 w-8 h-8" />
