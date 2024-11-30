@@ -1,67 +1,20 @@
-import { useCreateChat } from "@/api/chats/useCreateChat";
-import { useCustomAuth } from "@/contexts/auth-context";
 import { Inbox } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Socket, io } from "socket.io-client";
+import { toast } from "react-toastify";
 
-export default function FileUpload() {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [progress, setProgress] = useState(0);
-  const { mutate: createChat } = useCreateChat();
-  const { userId } = useCustomAuth();
-
-  // Initialize Socket.IO connection
-  useEffect(
-    function () {
-      const socketInstance = io("http://localhost:3001"); // Replace with your backend URL
-      if (userId) {
-        setSocket(socketInstance);
-
-        socketInstance.on("connect", function () {
-          console.log("Connected to server:", socketInstance.id);
-        });
-
-        socketInstance.on("upload-progress", (data: { progress: number }) => {
-          console.log("Progress received:", data.progress);
-          setProgress(data.progress);
-        });
-
-        socketInstance.on("upload-complete", () => {
-          console.log("Upload complete!");
-        });
-
-        socketInstance.on("upload-error", (data: { message: string }) => {
-          console.error("Upload error:", data.message);
-        });
-        socketInstance.on("disconnect", function () {
-          console.log("disconnected server from server");
-        });
-      } else {
-        socketInstance.disconnect();
-        setSocket(null);
-      }
-
-      return () => {
-        // Cleanup on unmount
-        socketInstance.disconnect();
-        setSocket(null);
-      };
-    },
-    [userId]
-  );
+interface FileUploadProps {
+  createChat(file: File): void;
+}
+export default function FileUpload({ createChat }: FileUploadProps) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
-      createChat({
-        file: acceptedFiles[0],
-        socketId: socket?.id || "",
-      });
-      //uploadFile(acceptedFiles[0], socket?.id || "");
+      if (acceptedFiles.length == 1) createChat(acceptedFiles[0]);
     },
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
+    maxSize: 10 * 1024 * 1024,
     onDropRejected: () => {
-      console.log("");
+      toast.error("Please upload 1 PDF!");
     },
   });
   return (

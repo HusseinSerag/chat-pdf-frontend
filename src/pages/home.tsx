@@ -1,14 +1,34 @@
+import { useCreateChat } from "@/api/chats/useCreateChat";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/ui/file-upload";
+import { Progress } from "@/components/ui/progress";
 import { useCustomAuth } from "@/contexts/auth-context";
+import { useProgressSocketIO } from "@/hooks/progress-socket";
 import { UserButton } from "@clerk/clerk-react";
-import { Inbox, LogIn } from "lucide-react";
-import { Link } from "react-router";
+
+import { LogIn } from "lucide-react";
+
+import { Link, useNavigate } from "react-router";
 
 export default function Home() {
   const { userId } = useCustomAuth();
   const isAuthenticated = !!userId;
-
+  const { progress, socket } = useProgressSocketIO();
+  const { mutate: createChat, isPending } = useCreateChat();
+  const navigate = useNavigate();
+  function createChatProp(file: File) {
+    createChat(
+      {
+        socketId: socket?.id || "",
+        file,
+      },
+      {
+        onSuccess: (data) => {
+          navigate(`/chat/${data.data.chatId}`);
+        },
+      }
+    );
+  }
   return (
     <div className="w-screen min-h-screen flex justify-center items-center bg-gradient-to-r from-rose-100 to-teal-100">
       <div className="absolute w-full max-w-[450px] top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
@@ -28,7 +48,11 @@ export default function Home() {
           </p>
           <div className="w-full px-4 mt-2">
             {isAuthenticated ? (
-              <FileUpload />
+              !isPending ? (
+                <FileUpload createChat={createChatProp} />
+              ) : (
+                <Progress className="bg-slate-300" value={progress} />
+              )
             ) : (
               <Link to={"/sign-in"}>
                 <Button>
