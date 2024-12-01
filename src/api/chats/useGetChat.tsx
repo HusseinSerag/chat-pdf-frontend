@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { getSingleChatsApi } from "./chat.api";
 
 export default function useGetChat() {

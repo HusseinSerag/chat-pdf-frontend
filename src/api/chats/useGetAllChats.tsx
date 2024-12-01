@@ -19,7 +19,7 @@ export function useGetAllChats() {
     queryFn: ({ pageParam }) => getChatsApi("createdAt", "asc", pageParam, 5),
     initialPageParam: 0,
 
-    getNextPageParam: (lastPage, pages, pageParam) => {
+    getNextPageParam: (lastPage, _, pageParam) => {
       if (lastPage.length < 5) {
         return null;
       }

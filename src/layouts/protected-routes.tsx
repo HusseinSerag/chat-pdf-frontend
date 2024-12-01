@@ -1,4 +1,3 @@
-import useGetChat from "@/api/chats/useGetChat";
 import { useCustomAuth } from "@/contexts/auth-context";
 import { Navigate, Outlet } from "react-router";
 

@@ -1,9 +1,10 @@
 import { Chat } from "@/api/chats/chat.api";
-import { MessageCircle, PlusCircleIcon } from "lucide-react";
+import { Home, MessageCircle, PlusCircleIcon } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -68,7 +69,7 @@ export default function ChatSidebar({
                   <SidebarMenuItem
                     className={cn(
                       "w-full text-nowrap overflow-hidden px-1 py-2 flex items-center gap-1 text-ellipsis",
-                      chatId == item.id && "order-first bg-blue-800 rounded-lg"
+                      chatId == item.id && " bg-blue-800 rounded-lg"
                     )}
                     key={item.id}
                   >
@@ -107,6 +108,12 @@ export default function ChatSidebar({
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+        <SidebarFooter className="bg-gray-900 border-t-2 border-t-white text-white flex items-center flex-col justify-center">
+          <Link className="flex gap-2" to={"/"}>
+            <Home />
+            <div>Home</div>
+          </Link>
+        </SidebarFooter>
       </Sidebar>
       {isMobile && <SidebarTrigger />}
     </>

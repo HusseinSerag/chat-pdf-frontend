@@ -1,8 +1,9 @@
+import ChatMainBody from "@/api/chats/ChatMainScreen";
 import { useGetAllChats } from "@/api/chats/useGetAllChats";
-import useGetChat from "@/api/chats/useGetChat";
 import ChatSidebar from "@/components/ui/chatSidebar";
 import { LoadingSpinner } from "@/components/ui/loader";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import LoadChat from "@/layouts/load-chat";
 import { useParams } from "react-router";
 
 export default function Chat() {
@@ -16,7 +17,6 @@ export default function Chat() {
     refetch,
     isFetchingNextPage,
   } = useGetAllChats();
-  const { data, isError: isErrorChat } = useGetChat();
 
   const isLoading = isLoadingChats;
 
@@ -36,7 +36,7 @@ export default function Chat() {
   return (
     <>
       <div className="h-full max-h-screen flex">
-        <div className="flex-1">
+        <div className="">
           <SidebarProvider>
             <ChatSidebar
               chatId={id ? parseInt(id) : undefined}
@@ -50,9 +50,9 @@ export default function Chat() {
             />
           </SidebarProvider>
         </div>
-        {isErrorChat && <div>wrong chat buddy </div>}
-        <div className="flex-[5] min-h-screen p-4 ">{data?.pdfName}</div>
-        <div className="flex-[3] border-l-4 border-l-slate-400"></div>
+        <LoadChat>
+          <ChatMainBody />
+        </LoadChat>
       </div>
     </>
   );
