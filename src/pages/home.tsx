@@ -40,7 +40,11 @@ export default function Home() {
             <UserButton />
           </div>
           <div className="flex mt-2">
-            {isAuthenticated && <Button size={"sm"}>Go to Chats </Button>}
+            {isAuthenticated && (
+              <Link to={"/chat"}>
+                <Button size={"sm"}>Go to Chats </Button>
+              </Link>
+            )}
           </div>
           <p className="max-w-[80%] text-sm sm:text-base text-balance text-slate-800">
             Join millions of students, researchers, and proffessionals to
