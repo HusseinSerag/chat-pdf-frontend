@@ -2,6 +2,7 @@ import PDFViewer from "@/components/ui/PDFViewer";
 import useGetChat from "./useGetChat";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import ChatComponent from "./ChatComponent";
 
 export default function ChatMainBody() {
   const { data } = useGetChat();
@@ -23,7 +24,9 @@ export default function ChatMainBody() {
         </h1>
         <PDFViewer pdf_url={data.pdfURL} />
       </div>
-      <div className="flex-[3] border-l-4 border-l-slate-400"></div>
+      <div className="flex-[3] border-l-4 border-l-slate-400">
+        <ChatComponent fileKey={data.fileKey} />
+      </div>
     </>
   );
 }
