@@ -25,7 +25,7 @@ export default function ChatMainBody() {
         <PDFViewer pdf_url={data.pdfURL} />
       </div>
       <div className="flex-[3] border-l-4 border-l-slate-400">
-        <ChatComponent fileKey={data.fileKey} />
+        <ChatComponent chatId={data.id} fileKey={data.fileKey} />
       </div>
     </>
   );

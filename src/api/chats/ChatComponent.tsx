@@ -6,13 +6,15 @@ import MessageList from "./MessageList";
 
 interface ChatsComponentsProps {
     fileKey: string;
+    chatId: number
 }
-export default function ChatComponent({fileKey}: ChatsComponentsProps){
+export default function ChatComponent({fileKey, chatId}: ChatsComponentsProps){
     const {input, handleInputChange, handleSubmit, messages} = useChat({
         api:"http://localhost:3001/api/chats/generate",
         credentials:'include',
         body:{
-            fileKey
+            fileKey,
+            chatId
         }
     })
     console.log(messages)

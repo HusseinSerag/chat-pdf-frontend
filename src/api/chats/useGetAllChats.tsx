@@ -16,7 +16,7 @@ export function useGetAllChats() {
   } = useInfiniteQuery({
     queryKey: ["chat", userId],
 
-    queryFn: ({ pageParam }) => getChatsApi("createdAt", "asc", pageParam, 5),
+    queryFn: ({ pageParam }) => getChatsApi("createdAt", "desc", pageParam, 5),
     initialPageParam: 0,
 
     getNextPageParam: (lastPage, _, pageParam) => {

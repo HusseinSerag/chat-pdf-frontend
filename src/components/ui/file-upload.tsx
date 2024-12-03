@@ -12,7 +12,7 @@ export default function FileUpload({ createChat }: FileUploadProps) {
     },
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
-    maxSize: 10 * 1024 * 1024,
+    maxSize: 30 * 1024 * 1024,
     onDropRejected: () => {
       toast.error("Please upload 1 PDF!");
     },
